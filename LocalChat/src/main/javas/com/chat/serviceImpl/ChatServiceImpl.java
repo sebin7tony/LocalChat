@@ -1,5 +1,7 @@
 package com.chat.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,11 @@ public class ChatServiceImpl implements ChatService{
 		
 		Integer dropid = chatdata.saveDrops(inputDrop);
 		return dropid;
+	}
+
+	public List<Drops> getAllDropsData() throws LocalChatExceptions {
+		
+		return chatdata.getAllDropsData();
 	}
 
 }

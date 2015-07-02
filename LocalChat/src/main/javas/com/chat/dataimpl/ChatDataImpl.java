@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -14,6 +16,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.chat.data.ChatData;
+import com.chat.dataimpl.util.RowMapping;
 import com.chat.exceptions.LocalChatExceptions;
 import com.chat.models.Drops;
 import com.chat.models.User;
@@ -63,6 +66,24 @@ public class ChatDataImpl implements ChatData{
 		
 		System.out.println("key value "+keyHolder.getKey().intValue());
 		return keyHolder.getKey().intValue();
+	}
+
+	public List<Drops> getAllDropsData() throws LocalChatExceptions{
+		
+		String sql = "select dropid,dropmsg,X(location) as lat,Y(location) as lon,likes,drop_date,userid from drops";
+		List<Map<String, Object>> queryList = null;
+		try{
+			
+			queryList = jdbcTemplate.queryForList(sql);
+		}
+		catch(DataAccessException e){
+			
+			System.out.println(e);
+			throw new LocalChatExceptions(e.getMessage(), 532, "Database problem");
+		}
+		 
+		List<Drops> dropsList = RowMapping.dropsMapper(queryList);
+		return dropsList;
 	}
 
 }

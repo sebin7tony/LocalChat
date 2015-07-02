@@ -55,5 +55,20 @@ public class LocalChatAPI {
 		}
 	
 	}
+	
+	@GET
+	@Path("/drops")
+	@Produces("application/json")
+	public Response getAllDrops(){
+		
+		System.out.println("sebin");
+		try {
+			return Response.ok(chatService.getAllDropsData()).build();
+		} catch (LocalChatExceptions e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			return Response.ok(e).status(500).build();
+		}
+	}
 
 }
