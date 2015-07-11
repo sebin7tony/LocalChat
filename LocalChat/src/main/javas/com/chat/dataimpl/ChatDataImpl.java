@@ -22,11 +22,12 @@ import com.chat.models.Drops;
 import com.chat.models.User;
 import com.mysql.jdbc.Statement;
 
-@Repository
+
 public class ChatDataImpl implements ChatData{
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	
 
 	public User getCurrentUser() {
 		

@@ -16,17 +16,29 @@ import com.chat.models.User;
 import com.chat.service.ChatService;
 
 @Path("/v1")
-@Component
 public class LocalChatAPI {
 	
-	@Autowired
+
 	ChatService chatService;
+	
+	public ChatService getChatService() {
+		return chatService;
+	}
+
+	public void setChatService(ChatService chatService) {
+		this.chatService = chatService;
+	}
+	
 	
 	@GET
 	@Path("/user")
 	@Produces("application/json")
 	public Response getCurrentUser(){
 		
+		if(chatService == null){
+			
+			System.out.println("what is this happening !!");
+		}
 		User user = chatService.getCurrentUser();
 		return Response.ok(user).build();
 	}
@@ -41,6 +53,13 @@ public class LocalChatAPI {
 			
 			LocalChatExceptions exceptions = new LocalChatExceptions("Illegal argument", 403, "");
 			return Response.ok(exceptions).status(400).build();
+		}
+		
+		System.out.println("enthonnu koppade ethu");
+		if(chatService == null){
+			
+			System.out.println("Enne kollu !! Spring gone mad !");
+			return null;
 		}
 		
 		try{
@@ -61,7 +80,12 @@ public class LocalChatAPI {
 	@Produces("application/json")
 	public Response getAllDrops(){
 		
-		System.out.println("sebin");
+		if(chatService == null){
+			
+			System.out.println("Enne kollu !! Spring gone mad !");
+			return null;
+		}
+		
 		try {
 			return Response.ok(chatService.getAllDropsData()).build();
 		} catch (LocalChatExceptions e) {

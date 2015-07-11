@@ -11,11 +11,18 @@ import com.chat.models.Drops;
 import com.chat.models.User;
 import com.chat.service.ChatService;
 
-@Service
+
 public class ChatServiceImpl implements ChatService{
 	
-	@Autowired
 	ChatData chatdata;
+
+	public ChatData getChatdata() {
+		return chatdata;
+	}
+
+	public void setChatdata(ChatData chatdata) {
+		this.chatdata = chatdata;
+	}
 
 	public User getCurrentUser() {
 		
